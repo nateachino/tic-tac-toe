@@ -59,25 +59,36 @@ let displayController = (() => {
         }
         square.innerHTML = squareObj.marker
         squareObj.taken = true
-        place(squareObj.position)
+        if(place(squareObj.position) == 3){
+          console.log("won")
+        }
       } 
     });
 
     const place = (pos)=>{
-      var num = 0;
+      var rowNum = 0;
+      var columnNum = 0;
       const squareObject = squareArray[pos]
       const row = squareObject.row
+      const column = squareObject.column
       const marker = squareObject.marker
 
       squareArray.forEach((obj)=>{
-        if (obj.row == row){
+        if (obj.row == row ){
           if (marker==obj.marker){
-            num+=1
-            console.log("num: " + num)
+            rowNum+=1
+            console.log("row num: " + rowNum)
+            return rowNum
+          }
+        }
+        if (obj.column == column ){
+          if (marker==obj.marker){
+            columnNum+=1
+            console.log("column num: " + columnNum)
+            return columnNum
           }
         }
       })
-      return num
     }
   }
 
