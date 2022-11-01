@@ -1,13 +1,14 @@
-let board = (() => {
+let displayController = (() => {
   const gameBoard = document.getElementById("board");
   var squareArray = [];
 
-  const playerOne = true
+  var playerOne = true;
+  var playerTwo = false;
   // const playerOne = player("X");
   // const playerTwo = player("O");
   for (i = 0; i < 9; i++) {
     const square = document.createElement("div");
-    let squareObj = {position: i, marker: null, row: null, column: null, diagonal: null}
+    let squareObj = {position: i, marker: null, row: null, column: null, diagonal: null, middle: null, taken: false}
     var position = squareObj.position
 
 
@@ -27,36 +28,62 @@ let board = (() => {
       squareObj.column=3
     }
 
-    if (postion == 0 || position == 5 || position == 8){
+    if (position == 0 || position == 5 || position == 8){
       squareObj.diagonal = 1
-    }else if (postion == 2 || position == 5 || position == 6){
+    }else if (position == 2 || position == 5 || position == 6){
       squareObj.diagonal = 2
     }
 
-    
-
-    squareArray.push(squareObj)
-
-    if (playerOne){
-      squareObj.marker='X'
-    }else{
-      squareObj.marker='O'
+    if(position == 5){
+      squareObj.middle = true
     }
+    
+    squareArray.push(squareObj)
 
     square.classList.add("square" + i + 1);
     square.style.border = "black 1px solid";
     gameBoard.append(square);
 
     square.addEventListener("click", () => {
-      square.style.backgroundColor = "blue";
-      square.innerHTML = squareObj.marker
-      console.log(squareObj)
-      console.log(squareObj.position)
-
+      if (squareObj.taken == false){
+        if (playerOne==true){
+          squareObj.marker="X"
+          square.style.backgroundColor = "blue";
+          playerOne = false
+          playerTwo = true
+        }else{
+          squareObj.marker="O"
+          square.style.backgroundColor = "red";
+          playerOne = true
+          playerTwo = false
+        }
+        square.innerHTML = squareObj.marker
+        squareObj.taken = true
+        place(squareObj.position)
+      } 
     });
+
+    const place = (pos)=>{
+      var num = 0;
+      const squareObject = squareArray[pos]
+      const row = squareObject.row
+      const marker = squareObject.marker
+
+      squareArray.forEach((obj)=>{
+        if (obj.row == row){
+          if (marker==obj.marker){
+            num+=1
+            console.log("num: " + num)
+          }
+        }
+      })
+      return num
+    }
   }
+
+  return squareArray
 })();
 
-let player = (marker) => {
+let turn = (player) => {
   return marker;
 };
