@@ -3,6 +3,12 @@ body {
   padding: 0;
 
   font-family: "Rubik", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 10px;
 }
 
 #board {
@@ -21,4 +27,12 @@ body {
   align-items: center;
 
   font-size: 64px;
+}
+
+header {
+  padding: 32px;
+  width: 100%;
+  margin: auto;
+  font-weight: 600;
+  font-size: 32px;
 }

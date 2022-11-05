@@ -1,11 +1,13 @@
 const gameBoard = document.getElementById("board");
+const winnerDiv = document.getElementById("winner");
+const resetButton = document.getElementById("reset");
+let moves = 0;
 
 function PlayerData(marker, turn, win) {
   this.marker = marker;
   this.turn = turn;
   this.win = win;
 }
-
 const playerOne = new PlayerData("X", true, false);
 const playerTwo = new PlayerData("O", false, false);
 
@@ -33,17 +35,21 @@ function check() {
     playerTwo.turn = false;
   }
 
+  moves += 1;
   let winner = checkWin();
 
   console.log(winner);
   if (winner == playerOne.marker) {
     playerOne.win = true;
     playerTwo.win = false;
-    console.log(playerOne);
+    winnerDiv.innerHTML = "The winner is player one!";
   } else if (winner == playerTwo.marker) {
     playerTwo.win = true;
     playerOne.win = false;
-    console.log(playerTwo);
+    winnerDiv.innerHTML = "The winner is player two!";
+  }
+  if (moves == 9 && playerOne.win != true && playerTwo.win != true) {
+    winnerDiv.innerHTML = "The game is a tie!";
   }
 }
 
@@ -123,7 +129,7 @@ function checkWin() {
   }
 }
 
-let displayController = (() => {
+let displayController = () => {
   let squareArray = createBoard;
   if (squareArray) {
   }
@@ -155,4 +161,24 @@ let displayController = (() => {
       }
     });
   });
-})();
+};
+
+displayController();
+
+resetButton.addEventListener("click", Reset);
+function Reset() {
+  let squareArray = createBoard;
+  winnerDiv.innerHTML = "";
+  const squares = document.getElementsByClassName("square");
+  const arraySquare = Array.from(squares);
+  arraySquare.forEach((element) => {
+    element.innerHTML = "";
+  });
+
+  squareArray.forEach((element) => {
+    element.marker = null;
+    element.taken = false;
+  });
+  playerTwo.win = false;
+  playerOne.win = false;
+}
