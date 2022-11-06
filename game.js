@@ -182,4 +182,6 @@ function Reset() {
   });
   playerTwo.win = false;
   playerOne.win = false;
+  playerOne.turn = true;
+  playerTwo.turn = true;
 }
