@@ -169,6 +169,7 @@ resetButton.addEventListener("click", Reset);
 function Reset() {
   let squareArray = createBoard;
   winnerDiv.innerHTML = "";
+  moves = 0;
   const squares = document.getElementsByClassName("square");
   const arraySquare = Array.from(squares);
   arraySquare.forEach((element) => {
